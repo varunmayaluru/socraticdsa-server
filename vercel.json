@@ -1,16 +1,18 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "app/main.py",
-        "use": "@vercel/python"
+  "version": 2,
+  "builds": [
+    {
+      "src": "Dockerfile",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "public"
       }
-    ],
-    "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "app/main.py"
-      }
-    ]
-  }
-  
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/"
+    }
+  ]
+}

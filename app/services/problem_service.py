@@ -5,7 +5,7 @@ from bson import ObjectId  # MongoDB ObjectId handling
 
 # Insert a new problem into MongoDB
 async def add_problem(db: AsyncIOMotorCollection, problem: Problem):
-    problem_dict = problem.dict()  # Convert Pydantic model to dictionary
+    problem_dict = problem.model_dump()  # Convert Pydantic model to dictionary
     result = await db.insert_one(problem_dict)
     return str(result.inserted_id)  # Convert ObjectId to a string
 

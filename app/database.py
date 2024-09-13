@@ -3,6 +3,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from app.config import settings
 from pydantic_settings import BaseSettings
 from pydantic import Field
+import asyncio
 
 class Settings(BaseSettings):
     MONGODB_URI: str = Field(..., env="MONGODB_URI")
@@ -20,6 +21,9 @@ settings = Settings()
 # # Example of accessing the settings
 # print(settings.MONGODB_URI)
 # print(settings.APP_ENV)
+
+# Get or set event loop (explicitly defining the event loop)
+loop = asyncio.get_event_loop()
 
 # MongoDB connection
 client = AsyncIOMotorClient(settings.MONGODB_URI, tlsAllowInvalidCertificates=True)
