@@ -27,3 +27,8 @@ async def delete_problem_by_name(db: AsyncIOMotorCollection, name: str):
     # Use a case-insensitive search to delete the problem by name
     result = await db.delete_one({"name": {"$regex": f"^{name}$", "$options": "i"}})
     return result.deleted_count > 0  # Return True if a document was deleted
+
+async def get_all_problems(db: AsyncIOMotorCollection):
+    # Fetch only the required fields: name, custom_name, difficulty
+    problems = await db.find({}, {"name": 1, "custom_name": 1, "difficulty": 1, "_id": 0}).to_list(100)  # Adjust limit if necessary
+    return problems

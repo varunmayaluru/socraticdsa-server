@@ -1,9 +1,10 @@
 # app/routers/problem_routes.py
 from fastapi import APIRouter, Depends, HTTPException
 from motor.motor_asyncio import AsyncIOMotorCollection
-from app.models import Problem
+from app.models import Problem, ProblemSummary
 from app.database import get_db
-from app.services.problem_service import add_problem, get_problem_by_name, delete_problem_by_name
+from typing import List
+from app.services.problem_service import add_problem, get_problem_by_name, delete_problem_by_name, get_all_problems
 
 router = APIRouter()
 
@@ -34,3 +35,10 @@ async def delete_problem(name: str, db: AsyncIOMotorCollection = Depends(get_db)
     if not deleted:
         raise HTTPException(status_code=404, detail="Problem not found")
     return {"message": f"Problem '{name}' deleted successfully."}
+
+@router.get("/fetch-all-problems", response_model=List[ProblemSummary])
+async def fetch_all_problems(db = Depends(get_db)):
+    problems = await get_all_problems(db)
+    if not problems:
+        raise HTTPException(status_code=404, detail="No problems found")
+    return problems

@@ -1,9 +1,20 @@
 # app/main.py
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from app.routers import problem_routes, openai_routes
 import os
 
 app = FastAPI()
+
+# Set up CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins. For more security, specify the allowed origins.
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all HTTP methods (GET, POST, etc.).
+    allow_headers=["*"],  # Allows all headers.
+)
+
 
 # Include the problem routes
 app.include_router(problem_routes.router)

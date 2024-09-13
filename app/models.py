@@ -14,3 +14,8 @@ class Problem(BaseModel):
     description: str
     examples: List[Example]
     constraints: List[str]
+
+class ProblemSummary(BaseModel):
+    name: str
+    custom_name: str
+    difficulty: str
