@@ -10,7 +10,8 @@ from typing import List, Dict, Any, Union
 class Example(BaseModel):
     input: str  # Input example, e.g., "nums1 = [1,3], nums2 = [2]"
     custom_input: Union[str, List]  # Customized input format for API processing
-    output: Union[float, List]  # The corresponding output of the example, can be a float or list
+    # output: Union[float, List]  # The corresponding output of the example, can be a float or list
+    output: str
     explanation: str  # Explanation for the result of the example
 
 class Problem(BaseModel):
@@ -25,3 +26,9 @@ class ProblemSummary(BaseModel):
     name: str
     custom_name: str
     difficulty: str
+
+class CodeRequestModel(BaseModel):
+    user_code: str  
+
+class CodeResponseModel(BaseModel):
+    combined_code: str  
