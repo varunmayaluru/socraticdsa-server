@@ -21,6 +21,8 @@ class Problem(BaseModel):
     description: str  # Full description of the problem
     examples: List[Example]  # A list of examples for the problem
     constraints: List[str]  # List of constraints as strings
+    start:str
+    end:str
 
 class ProblemSummary(BaseModel):
     name: str
