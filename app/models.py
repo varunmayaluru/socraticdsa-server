@@ -1,6 +1,6 @@
 # app/models.py
 from pydantic import BaseModel
-from typing import List, Dict, Any, Union
+from typing import List, Dict, Any, Union, Optional
 
 # class Example(BaseModel):
 #     input: Dict[str, Any]
@@ -9,9 +9,8 @@ from typing import List, Dict, Any, Union
 
 class Example(BaseModel):
     input: str  # Input example, e.g., "nums1 = [1,3], nums2 = [2]"
-    custom_input: Union[str, List]  # Customized input format for API processing
-    # output: Union[float, List]  # The corresponding output of the example, can be a float or list
-    output: str
+    custom_input: Optional[Union[str, List]] = None  # Customized input format for API processing
+    output: str  # The corresponding output of the example
     explanation: str  # Explanation for the result of the example
 
 class Problem(BaseModel):
@@ -21,9 +20,10 @@ class Problem(BaseModel):
     description: str  # Full description of the problem
     examples: List[Example]  # A list of examples for the problem
     constraints: List[str]  # List of constraints as strings
-    start:str
-    end:str
-
+    start: str  # Starting code
+    end: str  # Ending code
+    submit_example: Optional[Example] = None  # Optional single example to be submitted
+    
 class ProblemSummary(BaseModel):
     name: str
     custom_name: str
@@ -34,3 +34,16 @@ class CodeRequestModel(BaseModel):
 
 class CodeResponseModel(BaseModel):
     combined_code: str  
+
+# Define the Pydantic model for the test case structure
+class TestCase(BaseModel):
+    problem_name: str
+    test_case_id: str
+    input_params: Dict[str, List[int]]  # Dictionary to accommodate different parameters
+    expected_result: List[int]
+    actual_result: Optional[List[int]] = None  # Can be None initially
+    status: str = "not_tested"  # Default value is "not_tested"
+
+class TestCaseResponse(BaseModel):
+    message: str
+    test_case_id: str
