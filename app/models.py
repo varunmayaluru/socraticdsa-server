@@ -47,3 +47,29 @@ class TestCase(BaseModel):
 class TestCaseResponse(BaseModel):
     message: str
     test_case_id: str
+
+class Status(BaseModel):
+    id: int
+    description: str
+
+class Submission(BaseModel):
+    stdout: Optional[str]
+    time: str
+    memory: int
+    stderr: Optional[str]
+    token: str
+    compile_output: Optional[str]
+    message: Optional[str]
+    status: Status
+
+class PaylodItem(BaseModel):
+    cpu_extra_time: Optional[float]
+    cpt_time_limit: int
+    memory_limit: int
+    stack_limit: Optional[int]
+    wall_time_limit: Optional[int]
+    max_file_size: Optional[int]
+
+class APIRequest(BaseModel):
+    submissions: List[Submission]
+    paylod: List[PaylodItem]

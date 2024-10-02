@@ -1,7 +1,7 @@
 # app/main.py
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import problem_routes, openai_routes, code_routes, test_case_routes
+from app.routers import problem_routes, openai_routes, code_routes, test_case_routes, submission_routes
 import os
 
 app = FastAPI()
@@ -21,6 +21,7 @@ app.include_router(problem_routes.router)
 app.include_router(openai_routes.router)
 app.include_router(code_routes.router)
 app.include_router(test_case_routes.router)
+app.include_router(submission_routes.router)
 
 if __name__ == "__main__":
     import uvicorn
